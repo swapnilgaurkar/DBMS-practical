@@ -1,0 +1,15 @@
+SQL> create table p_info (id int, name varchar2(50), contact int, desgn varchar2(10));
+
+Table created.
+
+SQL> select * from tab;
+
+TNAME                          TABTYPE  CLUSTERID
+------------------------------ ------- ----------
+P_INFO                         TABLE
+
+SQL> insert into p_info values (101, 'xyz', 987653214, 'student');
+
+1 row created.
+
+SQL>
