@@ -1,0 +1,8 @@
+ 1.create user a2 identified by sit;
+(user creation with password sit)
+2.grant connect, resource to a2;
+(permission for a2)
+3.alter user a2 identified by NEW_PASSWORD;
+(to change password for a2)
+4.commit; or exit
+(to save the data or save and exit)
