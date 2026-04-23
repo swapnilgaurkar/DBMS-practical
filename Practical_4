@@ -1,0 +1,114 @@
+CREATE TABLE departments (
+    deptno NUMBER PRIMARY KEY,
+    dept_name VARCHAR2(50),
+    location VARCHAR2(50)
+);
+INSERT INTO departments VALUES (10, 'ACCOUNTING', 'New York');
+INSERT INTO departments VALUES (20, 'RESEARCH', 'Dallas');
+INSERT INTO departments VALUES (30, 'SALES', 'Chicago');
+INSERT INTO departments VALUES (40, 'OPERATIONS', 'Boston');
+
+CREATE TABLE emp (
+    emp_no NUMBER PRIMARY KEY,
+    birth_date DATE NOT NULL,
+    first_name VARCHAR2(14) NOT NULL,
+    last_name VARCHAR2(16) NOT NULL,
+    gender CHAR(1) CHECK (gender IN ('M','F')) NOT NULL,
+    hire_date DATE NOT NULL,
+    salary NUMBER(10,2) DEFAULT 7850.00,
+    job VARCHAR2(20) NOT NULL,
+    deptno NUMBER,
+    manager_id NUMBER,
+    FOREIGN KEY (deptno) REFERENCES departments(deptno)
+);
+INSERT INTO emp VALUES (7839, DATE '1955-11-17', 'John', 'Smith', 'M', DATE '1990-06-09', 5000.00, 'MANAGER', 10, NULL);
+INSERT INTO emp VALUES (7566, DATE '1960-02-21', 'James', 'Brown', 'M', DATE '1991-04-02', 2450.00, 'CLERK', 20, 7839);
+INSERT INTO emp VALUES (7654, DATE '1963-12-09', 'Scott', 'Allen', 'M', DATE '1989-06-04', 2975.00, 'SALESMAN', 30, 7839);
+INSERT INTO emp VALUES (7934, DATE '1970-12-03', 'Adam', 'Martin', 'M', DATE '1993-07-09', 1300.00, 'CLERK', 30, 7839);
+INSERT INTO emp VALUES (7788, DATE '1961-05-23', 'Alan', 'Walker', 'M', DATE '1990-09-14', 3000.00, 'ANALYST', 20, 7566);
+INSERT INTO emp VALUES (7902, DATE '1958-11-07', 'Alice', 'Jones', 'F', DATE '1988-12-12', 1600.00, 'CLERK', 30, 7654);
+INSERT INTO emp VALUES (7876, DATE '1962-01-14', 'George', 'Black', 'M', DATE '1989-01-20', 1100.00, 'CLERK', 40, 7566);
+INSERT INTO emp VALUES (7844, DATE '1965-09-28', 'Diana', 'White', 'F', DATE '1992-05-21', 2950.00, 'SALESMAN', 30, 7654);
+INSERT INTO emp VALUES (7900, DATE '1972-06-19', 'Bob', 'King', 'M', DATE '1991-08-18', 850.00, 'CLERK', 10, 7839);
+
+1. Employees whose first name starts with "A" and has at least 3 characters
+SELECT first_name, last_name
+FROM emp
+WHERE LOWER(first_name) LIKE 'a%'
+AND LENGTH(first_name) >= 3;
+
+2. Departments located in Dallas, New York, or Chicago
+SELECT dept_name, location
+FROM departments
+WHERE location IN ('Dallas','New York','Chicago');
+
+3. Employees working as Clerk, Salesman, or Analyst with salary more than 3000
+SELECT first_name, last_name, job, salary
+FROM emp
+WHERE job IN ('CLERK','SALESMAN','ANALYST')
+AND salary > 3000;
+
+4. Employees who are not managers
+SELECT first_name, last_name
+FROM emp
+WHERE job <> 'MANAGER';
+
+5. Employee who earns the highest salary
+SELECT first_name, last_name
+FROM emp
+WHERE salary = (SELECT MAX(salary) FROM emp);
+
+6. Clerk earning the highest salary among clerks
+SELECT emp_no, first_name, last_name
+FROM emp
+WHERE job = 'CLERK'
+AND salary = (
+    SELECT MAX(salary)
+    FROM emp
+    WHERE job = 'CLERK'
+);
+
+7. Clerks earning more than James or less than Scott
+SELECT first_name, last_name
+FROM emp
+WHERE job = 'CLERK'
+AND (
+salary > (SELECT salary FROM emp WHERE first_name = 'James')
+OR
+salary < (SELECT salary FROM emp WHERE first_name = 'Scott')
+);
+
+8. Employees earning highest salary in their departments
+SELECT e1.first_name,
+       e1.last_name,
+       e1.salary,
+       e1.deptno
+FROM emp e1
+WHERE e1.salary =
+(
+SELECT MAX(e2.salary)
+FROM emp e2
+WHERE e2.deptno = e1.deptno
+);
+With department name
+SELECT e1.first_name,
+       e1.last_name,
+       e1.salary,
+       e1.deptno,
+       d.dept_name
+FROM emp e1
+JOIN departments d
+ON e1.deptno = d.deptno
+WHERE e1.salary =
+(
+SELECT MAX(e2.salary)
+FROM emp e2
+WHERE e2.deptno = e1.deptno
+);
+
+9. Employees working in the same department as their manager
+SELECT e1.first_name, e1.last_name
+FROM emp e1
+JOIN emp e2
+ON e1.manager_id = e2.emp_no
+WHERE e1.deptno = e2.deptno;

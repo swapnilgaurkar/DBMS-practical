@@ -1,0 +1,31 @@
+create table st_info (PRN int, ST_NAME varchar2(20), M1 number, M2 number, M3 number);
+#if int written instead of number
+alter table st_info modify 
+#insert rows
+insert into st_info values (101,'abc',44,67,87);
+insert into st_info values (102,'pqr',67,55,49);
+insert into st_info values (103,'xyz',78,69,77);
+insert into st_info values (104,'ijk',49,68,87);
+insert into st_info values (105,'sam',68,87,78);
+insert into st_info values (106,'jake',32,45,56);
+insert into st_info values (107,'emily',56,64,77);
+
+
+select * from tab;
+#will display no. of tables present in the database for user a2
+
+select * from st_info;
+#will display no. of rows present in the table st_info
+
+#add columns total and percentage to the table
+alter table st_info add (total number, perc number);
+
+insert into st_info values (108,'rohit',67,87,70, null,null);
+
+desc st_info;
+
+set linesize 150
+
+#calculate and update total and percentage
+update st_info set total=m1+m2+m3;
+update st_info set perc=total/3;

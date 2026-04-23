@@ -1,0 +1,22 @@
+Aim: Write a PL/SQL function to find the reverse of a number.
+
+CREATE OR REPLACE FUNCTION reverse_it(x IN NUMBER)
+RETURN NUMBER
+AS
+    temp NUMBER;      -- copy of input
+    rev NUMBER := 0;
+    r NUMBER;
+BEGIN
+    temp := x;
+
+    WHILE temp > 0 LOOP
+        r := MOD(temp, 10);
+        rev := (rev * 10) + r;
+        temp := TRUNC(temp / 10);
+    END LOOP;
+
+    RETURN rev;
+END;
+/
+
+SELECT reverse_it(1234) FROM dual;

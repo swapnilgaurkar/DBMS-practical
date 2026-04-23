@@ -1,0 +1,53 @@
+1. Swapping Two Numbers Without Using a Third Variable Procedure Creation:
+CREATE OR REPLACE PROCEDURE SwapNumbers (
+    num1 IN NUMBER,
+    num2 IN NUMBER
+)
+AS
+BEGIN
+    DBMS_OUTPUT.PUT_LINE('After Swap:');
+    DBMS_OUTPUT.PUT_LINE('num1 = ' || num2);
+    DBMS_OUTPUT.PUT_LINE('num2 = ' || num1);
+END;
+/
+
+SET SERVEROUTPUT ON;
+EXEC SwapNumbers(5,10);
+
+2. Finding the Largest Amongst Three Numbers Procedure Creation:
+CREATE OR REPLACE PROCEDURE FindLargest (
+    num1 IN NUMBER,
+    num2 IN NUMBER,
+    num3 IN NUMBER,
+    largest OUT NUMBER
+) AS
+BEGIN
+    IF num1 >= num2 AND num1 >= num3 THEN
+        largest := num1;
+    ELSIF num2 >= num1 AND num2 >= num3 THEN
+        largest := num2;
+    ELSE
+        largest := num3;
+    END IF;
+END;
+/
+
+VARIABLE result NUMBER;
+EXEC FindLargest(10, 25, 15, :result);
+PRINT result;
+
+3. Calculating the Area of a Circle Given the Radius Procedure Creation:
+CREATE OR REPLACE PROCEDURE CalculateArea (
+    radius IN NUMBER
+)
+AS
+    area NUMBER;   -- variable declared inside procedure
+BEGIN
+    area := 3.14159 * radius * radius;
+    
+    DBMS_OUTPUT.PUT_LINE('Area of Circle: ' || area);
+END;
+/
+
+SET SERVEROUTPUT ON;
+EXEC CalculateArea(5);

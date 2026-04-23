@@ -1,0 +1,50 @@
+Aim: Write a PL\SQL functions
+•	To find the largest number amongst given two numbers.
+•	To find the total number of employees from emp relation given the employee number.
+•	To return the email id of the employee consisting of firstname and lastname.
+
+
+1. To Find the Largest Number Between Two Numbers
+
+CREATE OR REPLACE FUNCTION largest_of_two(
+    x IN NUMBER,
+    y IN NUMBER
+) RETURN NUMBER
+AS
+BEGIN
+    IF x > y THEN
+        RETURN x;
+    ELSE
+        RETURN y;
+    END IF;
+END;
+/
+
+SELECT largest_of_two(10, 20) FROM dual;
+
+2. To Find the Total Number of Employees
+
+CREATE OR REPLACE FUNCTION number_of_employees 
+RETURN NUMBER 
+AS
+    total NUMBER := 0;
+BEGIN
+    SELECT COUNT(*) INTO total FROM emp;
+    RETURN total;
+END;
+/
+
+3. To Return the Email ID of the Employee
+CREATE OR REPLACE FUNCTION email_return(
+    v_fname mytable.fname%TYPE, 
+    v_lname mytable.lname%TYPE
+) 
+RETURN VARCHAR2 
+AS
+BEGIN
+    RETURN v_fname || '.' || v_lname || '@sitnagpur.siu.edu.in';
+END;
+/
+
+SELECT email_return('ojaswini', 'thote') FROM dual;
+SELECT number_of_employees FROM dual;

@@ -1,0 +1,10 @@
+create table p_info (id int, name varchar(50), contact int, desg varchar2(10));
+(to create table)
+select * from tab;
+(to check no of tables present in the database)
+select * from p_info;
+(no rows selected)
+insert into p_info values(101, xyz, 987654321, student);
+(ouput: error)
+insert into p_info values(101, 'xyz', 987654321, 'student');
+(1 row created)

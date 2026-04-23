@@ -1,0 +1,59 @@
+Aim: Consider any Airline Reservation System. Design a database containing tables/fields as route_id, origin, destination, fare, distance, capacity. 
+Write a procedure to satisfy the following conditions accepting the route_id as the user  input.
+•	If the distance is less than 500 then update the fare to be 190.98
+•	If the distance is between 501-1000 then update fare to be 876
+•	If the distance is greater than 1000 then display a message.
+
+CREATE TABLE route_header (
+    route_id NUMBER(5),
+    origin VARCHAR2(20),
+    destination VARCHAR2(20),
+    fare NUMBER(7,2),
+    distance NUMBER(3),
+    capacity NUMBER(3)
+);
+
+
+INSERT INTO route_header VALUES (102, 'trichy', 'madurai', 33, 450, 56);
+INSERT INTO route_header VALUES (103, 'madurai', 'madras', 35, 250, 50);
+INSERT INTO route_header VALUES (104, 'madurai', 'madras', 35, 250, 50);
+INSERT INTO route_header VALUES (105, 'madurai', 'madras', 35, 250, 50);
+
+
+CREATE OR REPLACE PROCEDURE router_header_proc1 (
+    routeid route_header.route_id%TYPE
+) AS
+    a NUMBER(7,2);
+    b NUMBER(4);
+BEGIN
+    SELECT fare, distance 
+    INTO a, b 
+    FROM route_header 
+    WHERE route_id = routeid;
+
+    IF b <= 500 THEN
+        UPDATE route_header 
+        SET fare = 190.98 
+        WHERE route_id = routeid;
+
+        DBMS_OUTPUT.PUT_LINE('Fare updated to 190.98');
+
+    ELSIF b > 500 AND b <= 1000 THEN
+        UPDATE route_header 
+        SET fare = 800.00 
+        WHERE route_id = routeid;
+
+        DBMS_OUTPUT.PUT_LINE('Fare updated to 800');
+
+    ELSE
+        DBMS_OUTPUT.PUT_LINE('Sorry, distance is too large.');
+    END IF;
+
+EXCEPTION
+    WHEN NO_DATA_FOUND THEN
+        DBMS_OUTPUT.PUT_LINE('Route ID not found');
+END;
+/
+
+SET SERVEROUTPUT ON;
+EXEC router_header_proc1(102);

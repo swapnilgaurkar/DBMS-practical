@@ -1,0 +1,30 @@
+
+create a table with emp with emp_id, name and basic
+insert 10 rows
+add hra,da,total
+compute hra as 7.5% of basic
+compute da as 150% of basic
+compute total
+add dedu, take_home
+compute dedu as 12% of total
+compute take_home as difference between dedu and total
+
+
+create table emp (emp_id int, name varchar2(20), basic number);
+
+insert into emp values (102, 'rohit', 45000);
+insert into emp values (103, 'sam', 50000);
+insert into emp values (104, 'abc', 55000);
+insert into emp values (105, 'pqr', 76000);
+insert into emp values (106, 'xyz', 57000);
+insert into emp values (107, 'ijk', 60000);
+insert into emp values (108, 'mno', 65000);
+insert into emp values (109, 'fgh', 80000);
+
+alter table emp add (hra number, da number, total number);
+update emp set hra=(0.075*basic);
+update emp set da=(1.5*basic);
+update emp set total=(hra+da);
+alter table emp add (dedu number, take_home number);
+update emp set dedu=(0.12*total);
+update emp set take_home=(total-dedu);

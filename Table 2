@@ -1,0 +1,40 @@
+create a table st_info with 3 subjects and calculate total and percentage 
+
+create table st_info (PRN int, student_name varchar(20), m1 int, m2 int, m3 int, total int, percentage number);
+insert into st_info values (101, 'abc', 88, 89, 77, NULL, NULL);
+desc st_info; (table structure)
+update st_info set total=m1+m2+m3;
+
+insert into st_info values (101, 'abc', 88, 89, 77);
+
+insert into st_info values (101, 'pqr', 65, 55, 59, NULL, NULL);
+insert into st_info values (101, 'fgh', 78, 68, 91, NULL, NULL);
+insert into st_info values (101, 'xyz', 49, 58, 63, NULL, NULL);
+insert into st_info values (101, 'ijk', 87, 78, 66, NULL, NULL);
+insert into st_info values (101, 'sam', 79, 82, 83, NULL, NULL);
+insert into st_info values (101, 'dan', 77, 87, 69, NULL, NULL);
+insert into st_info values (101, 'uvw', 87, 79, 77, NULL, NULL);
+insert into st_info values (101, 'jkl', 66, 68, 85, NULL, NULL);
+insert into st_info values (101, 'mno', 77, 71, 72, NULL, NULL);
+
+select * from st_info;
+
+# to calculate total and percentag we use update command
+update st_info set total=m1+m2+m3;
+update st_info set percentage=total/3;
+
+#to delete all rows and columns i.e date in the table
+truncate table st_info 
+
+
+#Table emp_info
+
+create table emp_info (emp_id int, emp_name varchar(20),contact int, salary int, department varchar(20));
+
+insert into emp_info values (111, 'sam', 9267286845, 70000, 'finance');
+insert into emp_info values (112, 'jane', 9367285689, 75000, 'IT');
+insert into emp_info values (113, 'emily', 9567823987, 80000, 'Marketing');
+insert into emp_info values (114, 'Jack', 8625567654, 85000, 'finance');
+insert into emp_info values (115, 'sam', 9267286845, 70000, 'finance');
+insert into emp_info values (116, 'sam', 9267286845, 70000, 'finance');
+insert into emp_info values (117, 'sam', 9267286845, 70000, 'finance');

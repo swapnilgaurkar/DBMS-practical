@@ -1,0 +1,88 @@
+a) Find the average salary of instructors in the Computer Science department:
+SELECT AVG(I.salary) AS AverageSalary
+FROM INSTRUCTOR I
+JOIN DEPARTMENT D
+ON I.dept_id = D.dept_id
+WHERE D.name = 'Computer Science';
+
+b) Find the average salary in each department:
+SELECT D.name AS Department,
+       AVG(I.salary) AS AverageSalary
+FROM DEPARTMENT D
+JOIN INSTRUCTOR I
+ON D.dept_id = I.dept_id
+GROUP BY D.name;
+
+c) Total salary of teachers earning more than 30000
+SELECT SUM(salary) AS TotalSalary
+FROM INSTRUCTOR
+WHERE salary > 30000;
+
+d) Number of students enrolled in each course
+SELECT C.course_id,
+       C.title,
+       COUNT(T.student_id) AS EnrolledStudents
+FROM COURSE C
+LEFT JOIN SECTION S
+ON C.course_id = S.course_id
+LEFT JOIN TAKES T
+ON S.section_id = T.section_id
+GROUP BY C.course_id, C.title;
+
+e) Departments whose building contains "Symbio"
+SELECT name
+FROM DEPARTMENT
+WHERE building LIKE '%Symbio%';
+
+f) Departments whose name contains "sci" (case insensitive)
+SELECT name
+FROM DEPARTMENT
+WHERE LOWER(name) LIKE '%sci%';
+
+g) Display length of student names
+SELECT name,
+       LENGTH(name) AS NameLength
+FROM STUDENT;
+
+h) Total number of instructors
+SELECT COUNT(*) AS TotalInstructors
+FROM INSTRUCTOR;
+
+i) Add hiredate column, insert rows, display instructors working for past 5 years
+Add column
+ALTER TABLE INSTRUCTOR
+ADD hiredate DATE;
+Insert sample rows
+INSERT INTO INSTRUCTOR VALUES (8,'John Doe',1,0,75000, DATE '2019-01-15');
+INSERT INTO INSTRUCTOR VALUES (9,'Jane Smith',2,1,80000, DATE '2018-06-30');
+INSERT INTO INSTRUCTOR VALUES (10,'Bob Johnson',3,0,70000, DATE '2021-03-01');
+INSERT INTO INSTRUCTOR VALUES (11,'Alice Brown',1,0,72000, DATE '2023-11-01');
+Instructors working for past 5 years
+SELECT name
+FROM INSTRUCTOR
+WHERE hiredate <= ADD_MONTHS(SYSDATE,-60);
+
+j) Instructors who joined before 30-Jun-1990 or after 31-Dec-1990
+SELECT name
+FROM INSTRUCTOR
+WHERE hiredate < DATE '1990-06-30'
+OR hiredate > DATE '1990-12-31';
+
+k) Instructors retiring on 01-Jan-2024 (max service 18 years)
+SELECT name
+FROM INSTRUCTOR
+WHERE hiredate <= DATE '2006-01-01';
+
+l) Instructors whose salary has at least 4 digits
+SELECT name
+FROM INSTRUCTOR
+WHERE LENGTH(TO_CHAR(FLOOR(salary))) >= 4;
+
+m) Salary classification using CASE
+SELECT name,
+       CASE
+           WHEN salary < 60000 THEN 'Less Salary'
+           WHEN salary = 60000 THEN 'Exact Salary'
+           ELSE 'More Salary'
+       END AS SalaryStatus
+FROM INSTRUCTOR;

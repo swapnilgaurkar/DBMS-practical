@@ -1,0 +1,18 @@
+Aim: Write a trigger to demonstrate the use of Row level trigger and Statement level trigger.
+
+Statement-Level Trigger
+CREATE OR REPLACE TRIGGER trig_upt_student
+BEFORE UPDATE ON student
+BEGIN
+    DBMS_OUTPUT.PUT_LINE('This is a statement-level trigger that got fired');
+END;
+/
+
+Row-Level Trigger
+CREATE OR REPLACE TRIGGER trig_upt_student
+BEFORE UPDATE ON student 
+FOR EACH ROW
+BEGIN
+    DBMS_OUTPUT.PUT_LINE('Row-level trigger got fired');
+END;
+/
